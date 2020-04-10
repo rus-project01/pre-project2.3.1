@@ -34,15 +34,15 @@ public class CarController {
     }
 
     @PostMapping(value = "edit")
-    public String editCar(HttpServletRequest request, ModelMap model) {
-        userServiceImp.updateUser(new User(request.getParameter("name"), Integer.parseInt(request.getParameter("age")), request.getParameter("street")));
+    public String editCar(@ModelAttribute("listPersons") User user, ModelMap model) {
+        userServiceImp.updateUser(user);
         model.addAttribute("listPersons", userServiceImp.listUsers());
         return "users";
     }
 
     @PostMapping(value = "newuser")
-    public String createUser(HttpServletRequest request, ModelMap model) {
-        userServiceImp.add(new User(request.getParameter("name"), Integer.parseInt(request.getParameter("age")), request.getParameter("street")));
+    public String createUser(@ModelAttribute("listPersons") User user, ModelMap model) {
+        userServiceImp.add(user);
         model.addAttribute("listPersons", userServiceImp.listUsers());
         return "users";
     }
