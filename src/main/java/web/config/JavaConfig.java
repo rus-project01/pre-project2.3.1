@@ -19,7 +19,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @ComponentScan("web")
-public class WebConfig implements WebMvcConfigurer {
+public class JavaConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
