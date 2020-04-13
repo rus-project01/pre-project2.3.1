@@ -12,11 +12,11 @@ import web.service.UserService;
 public class UserController {
 
     @Autowired
-    private UserService userServiceImp;
+    private UserService userServiceImpl;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String printCars(ModelMap model) {
-        model.addAttribute("listPersons", userServiceImp.listUsers());
+        model.addAttribute("listPersons", userServiceImpl.listUsers());
         return "users";
     }
 
@@ -30,16 +30,16 @@ public class UserController {
 
     @PostMapping(value = "edit")
     public String editCar(@ModelAttribute("listPersons") User user, ModelMap model) {
-        userServiceImp.updateUser(user);
-        model.addAttribute("listPersons", userServiceImp.listUsers());
+        userServiceImpl.updateUser(user);
+        model.addAttribute("listPersons", userServiceImpl.listUsers());
         return "redirect:/cars/";
     }
 
     @PostMapping(value = "newuser")
     public String createUser(@ModelAttribute("listPersons") User user, ModelMap model) {
-        if(userServiceImp.checkUser(user)) {
-            userServiceImp.add(user);
-            model.addAttribute("listPersons", userServiceImp.listUsers());
+        if(userServiceImpl.checkUser(user)) {
+            userServiceImpl.add(user);
+            model.addAttribute("listPersons", userServiceImpl.listUsers());
             return "redirect:/cars/";
         }
         return "redirect:error";
@@ -54,8 +54,8 @@ public class UserController {
 
     @GetMapping("delete")
     public String deleteUser(@RequestParam Long id, ModelMap model) {
-        userServiceImp.deleteUser(id);
-        model.addAttribute("listPersons", userServiceImp.listUsers());
+        userServiceImpl.deleteUser(id);
+        model.addAttribute("listPersons", userServiceImpl.listUsers());
         return "redirect:/cars/";
     }
 

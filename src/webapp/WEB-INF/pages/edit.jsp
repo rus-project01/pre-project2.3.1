@@ -9,11 +9,7 @@
     <h1>Edit User</h1>
     <form:form action="edit" method="post" modelAttribute="userr">
         <table>
-                <td><form:hidden path="id" /></td>
-            <tr>
-                <td>Name:</td>
-                <td><form:input path="name" /></td>
-            </tr>
+            <td><form:hidden path="id" /></td>
             <tr>
                 <td>Age:</td>
                 <td><form:input path="age" /></td>

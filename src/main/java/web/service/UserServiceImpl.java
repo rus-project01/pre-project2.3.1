@@ -10,10 +10,10 @@ import web.model.User;
 import java.util.List;
 
 @Service
-public class UserServiceimp implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
-    @Qualifier("userDaoimp")
+    @Qualifier("userDaoImpl")
     private UserDao userDao;
 
     @Transactional

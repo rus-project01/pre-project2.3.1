@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class UserDaoimp implements UserDao {
+public class UserDaoImpl implements UserDao {
 
     @Autowired
     @Qualifier("getSessionFactory")
@@ -26,15 +26,12 @@ public class UserDaoimp implements UserDao {
     public boolean checkUser(User user) {
         Query query = sessionFactory.getCurrentSession().createQuery("from User where name=:name")
                 .setParameter("name", user.getName());
-        System.out.println(query.getResultList().size());
-        System.out.println(query.getResultList().isEmpty());
         return query.getResultList().isEmpty();
     }
 
     @Override
     public void updateUser(User user) {
-        Query query = sessionFactory.getCurrentSession().createQuery("update User set name=:name, age=:age, street=:street where id=:id");
-        query.setParameter("name", user.getName());
+        Query query = sessionFactory.getCurrentSession().createQuery("update User set age=:age, street=:street where id=:id");
         query.setParameter("age", user.getAge());
         query.setParameter("street", user.getStreet());
         query.setParameter("id", user.getId());
