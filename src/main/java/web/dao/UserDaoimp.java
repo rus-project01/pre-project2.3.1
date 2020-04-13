@@ -26,8 +26,6 @@ public class UserDaoimp implements UserDao {
     public boolean checkUser(User user) {
         Query query = sessionFactory.getCurrentSession().createQuery("from User where name=:name")
                 .setParameter("name", user.getName());
-        System.out.println(query.getResultList().size());
-        System.out.println(query.getResultList().isEmpty());
         return query.getResultList().isEmpty();
     }
 
