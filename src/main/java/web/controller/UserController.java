@@ -1,21 +1,15 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.UserService;
-import web.service.UserServiceImp;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/cars")
-public class CarController {
+public class UserController {
 
     @Autowired
     private UserService userServiceImp;
@@ -27,8 +21,9 @@ public class CarController {
     }
 
     @GetMapping(value = "edit")
-    public String editCar(ModelMap model) {
+    public String editCar(@RequestParam Long id, ModelMap model) {
         User user = new User();
+        user.setId(id);
         model.addAttribute("userr", user);
         return "edit";
     }
@@ -37,14 +32,17 @@ public class CarController {
     public String editCar(@ModelAttribute("listPersons") User user, ModelMap model) {
         userServiceImp.updateUser(user);
         model.addAttribute("listPersons", userServiceImp.listUsers());
-        return "users";
+        return "redirect:/cars/";
     }
 
     @PostMapping(value = "newuser")
     public String createUser(@ModelAttribute("listPersons") User user, ModelMap model) {
-        userServiceImp.add(user);
-        model.addAttribute("listPersons", userServiceImp.listUsers());
-        return "users";
+        if(userServiceImp.checkUser(user)) {
+            userServiceImp.add(user);
+            model.addAttribute("listPersons", userServiceImp.listUsers());
+            return "redirect:/cars/";
+        }
+        return "redirect:error";
     }
 
     @GetMapping(value = "newuser")
@@ -58,6 +56,11 @@ public class CarController {
     public String deleteUser(@RequestParam Long id, ModelMap model) {
         userServiceImp.deleteUser(id);
         model.addAttribute("listPersons", userServiceImp.listUsers());
-        return "users";
+        return "redirect:/cars/";
+    }
+
+    @GetMapping("error")
+    public String errorUser(ModelMap model) {
+        return "error";
     }
 }

@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class UserDaoImp implements UserDao {
+public class UserDaoimp implements UserDao {
 
     @Autowired
     @Qualifier("getSessionFactory")
@@ -24,20 +24,20 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public boolean checkUser(User user) {
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User where name=:name and age=:age and street=:street")
-                .setParameter("name", user.getName())
-                .setParameter("age", user.getAge())
-                .setParameter("street", user.getStreet());
-        return query != null;
+        Query query = sessionFactory.getCurrentSession().createQuery("from User where name=:name")
+                .setParameter("name", user.getName());
+        System.out.println(query.getResultList().size());
+        System.out.println(query.getResultList().isEmpty());
+        return query.getResultList().isEmpty();
     }
 
     @Override
     public void updateUser(User user) {
-        Query query = sessionFactory.getCurrentSession().createQuery("update User set name=:name, age=:age, street=:street where name=:name");
+        Query query = sessionFactory.getCurrentSession().createQuery("update User set name=:name, age=:age, street=:street where id=:id");
         query.setParameter("name", user.getName());
         query.setParameter("age", user.getAge());
         query.setParameter("street", user.getStreet());
-        query.setParameter("name", user.getName());
+        query.setParameter("id", user.getId());
         query.executeUpdate();
     }
 

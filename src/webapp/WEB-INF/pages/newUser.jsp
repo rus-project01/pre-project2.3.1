@@ -9,7 +9,7 @@
     <h1>New User</h1>
     <form:form action="newuser" method="post" modelAttribute="users">
         <table>
-            <form:hidden path="id"/>
+            <form:hidden path="id" />
             <tr>
                 <td>Name:</td>
                 <td><form:input path="name" /></td>
